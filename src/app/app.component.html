@@ -1,0 +1,84 @@
+  <header>
+  <ul *ngIf='login'>
+    <li id='separacion'><a [routerLink]="['/lista']" [routerLinkActive]="['active']">Clientes</a></li>
+    <li><a [routerLink]="['/registrar']" [routerLinkActive]="['active']">Registrar</a></li>
+    <li class='logo'><a [routerLink]="['/home']" [routerLinkActive]="['active']">RV</a></li>
+    <li><a [routerLink]="['/volver']" [routerLinkActive]="['active']">Pago de impuestos</a></li>
+    <li><a [routerLink]="['/contacto']" [routerLinkActive]="['active']">Cortes</a></li>
+  </ul>
+</header>
+
+<section id='content'>
+    <div id='decoracion' class='caja' *ngIf='!login && this.pagina!=2'>
+      <h2>Bienvenido</h2>
+      <p>
+        <img src='../assets/img/logotipocpsm.jpeg'>
+      </p>
+    </div>
+    <div class='login caja' *ngIf='!login && this.pagina!=2'>
+    <h3>Iniciar sesion</h3>
+    <form #loginForm='ngForm' class='form' (ngSubmit)='logear(loginForm)'>
+      <p class='titulo'>
+        Correo electronico : 
+      </p>
+      <p>
+        <input class= 'cuadros' type="text" name='email' #email='ngModel' [(ngModel)]='usuario.email' required>
+        <span *ngIf='email.touched && !email.valid'>
+          email obligatorio
+        </span>
+      </p>
+      <p class='titulo'>
+        Contraseña : 
+      </p>
+      <p>
+        <input class= 'cuadros' type="password" name='password' #password='ngModel' [(ngModel)]='usuario.password' required>
+        <span *ngIf='password.touched && !password.valid'>
+          contraseña obligatoria
+        </span>
+      </p>
+      <input type="submit" value='Ingresar' [disabled]='!loginForm.form.valid'/>
+    </form>
+  </div>
+  <div id='decoracion' class='caja' *ngIf='this.pagina==2'>
+    <h2>Bienvenido</h2>
+    <p>
+      <img src='../assets/img/logotipocpsm.jpeg'>
+    </p>
+  </div>
+  <div *ngIf='this.pagina==2' class='login caja caja2'>
+    <h3>Debes hacer el primer registro de administrador </h3>
+    <form #usuarioForm='ngForm' (ngSubmit)='registrar(usuarioForm)' class='form'>
+      <p>
+        Digita nombre del usuario :
+      </p>
+      <p>
+        <input type='text' name='name' #name='ngModel' [(ngModel)]='this.usuario.name' required />
+        <span class='form_error' *ngIf='name.touched && !name.valid'>
+          Nombre de usuario obligatorio
+        </span>
+      </p>
+      <p>
+        Digita el correo del usuario :
+      </p>
+      <p>
+        <input type='text' name='email' #email='ngModel' [(ngModel)]='this.usuario.email' required/>
+        <span class='form_error' *ngIf='email.touched && !email.valid'>
+          Email del usuario obligatorios
+        </span>
+      </p>
+      <p>
+        Digita contraseña del administrador :
+      </p>
+      <p>
+        <input type='password' name='password' #password='ngModel' [(ngModel)]='this.usuario.password' required/>
+        <span class='form_error' *ngIf='password.touched && ! password.valid'>
+          Contraseña del usuario obligatoria
+        </span>
+      </p>
+      <p id='boton'>
+        <input type='submit' value='Registrar administrador'/>
+      </p>
+    </form>
+  </div>
+  <router-outlet *ngIf='login'></router-outlet >
+</section>

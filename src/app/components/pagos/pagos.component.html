@@ -1,0 +1,26 @@
+<div class='container'>
+		<h2 style="text-align: center;">Pagos</h2>
+		<div class='tabla'>
+			<table class='mostrar'>
+				<tr height='50' class='headerstable'>
+					<th width='100'>Folio</th>
+					<th width='100'>Fecha de pago</th>
+					<th width='100'>Pagado hasta </th>
+					<th width='100'>Del </th>
+					<th width='50'>Cantidad</th>
+				</tr>
+			</table>
+			<table class='mostrar' cellspacing="1px" border="black">
+				<tr *ngFor ='let pago of pagos' class='cliente headerstable' height='50' >
+					<td width='100'>{{pago.folio}} </td>
+					<td width='100'>{{pago.fecha_pago}} </td>
+					<td width='100'>{{pago.mes}}</td>
+					<td width='100'>{{pago.year}}</td>
+					<td width='50'>{{pago.cantidad}}</td>
+					
+				</tr>
+			</table>
+		</div>
+		<button [routerLink]="['/proceso',this.id]">Regresar</button>
+
+</div>

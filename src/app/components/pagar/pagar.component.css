@@ -1,0 +1,27 @@
+.pagar{
+	background: #ccc;
+	width:300px;
+	margin-left: 35%;
+	border:1px solid black;
+}
+.pagar h2{
+	font-family: Helvetica,Arial;
+}
+.boton{
+	margin-left: 40%;
+	font-family: Helvetica,Arial;
+	border:1px solid black;
+	width:50px;
+	height: 20px;
+}
+
+#realizar{
+	width: 100px;
+	margin-left: 40px;
+	margin-bottom: 10px;
+}
+#cancelar{
+	width:75px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}

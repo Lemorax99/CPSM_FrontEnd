@@ -1,0 +1,76 @@
+<div id='div_tabla' *ngIf='this.pagina=="principal"'>
+    <table >
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Tipo</th>
+            <th>Opciones</th>
+        </tr>
+        <tr *ngFor='let user of usuarios'>
+            <td>{{this.user.name}}</td>
+            <td>{{this.user.email}}</td>
+            <td>{{this.user.tipo}}</td>
+            <td>
+                <button (click)='this.pagina="editar"' ><i class="fas fa-user-edit"></i></button>
+                <button (click)='this.pagina="eliminar";this.usuario=user'><i class="fas fa-user-minus"></i></button>
+            </td>
+        </tr>
+    </table>
+    <button (click)='this.pagina="registrar"'><i class="fas fa-user-plus"></i>  Añadir usuario</button>
+</div>
+<div *ngIf='this.pagina=="editar" || this.pagina=="registrar"'>
+	<h1>Confirmar</h1>
+    <form #usuarioForm='ngForm' (ngSubmit)='onSubmit(usuarioForm)'>
+        <p>
+            <label for='name'>Digita nombre del usuario : </label>
+            <input type='text' name='name' #name='ngModel' [(ngModel)]='usuario.name' required/>
+            <span class='form_error' *ngIf='name.touched && !name.valid'>
+				Nombre de usuario obligatorio
+			</span>
+        </p>
+        <p>
+            <label for='email'>Digita el email del usuario : </label>
+            <input type='text' name='email' #email='ngModel' [(ngModel)]='usuario.email' required/>
+            <span class='form_error' *ngIf='email.touched && !email.valid' >
+                Email del usuario obligatorio
+            </span>
+        </p>
+        <p>
+            <label for='password'>Digita contraseña del usuario : </label>
+            <input type="password" name='password' #password='ngModel' [(ngModel)]='usuario.password' required/>
+            <span class='form_error' *ngIf='password.touched && !password.valid' >
+                Contraseña del usuario obligatorio
+            </span>
+        </p>
+        <p>
+            <label for='tipo'>Digita tipo de usuario : </label>
+            <select name='tipo' #tipo='ngModel' [(ngModel)]='usuario.tipo' required>
+                <option *ngFor='let tip of tipos_usuario' value={{tip}}>{{tip}}</option>
+            </select>
+            <span class='form_error' *ngIf='tipo.touched && !tipo.valid' >
+                Tipo de usuario obligatorio
+            </span>
+        </p>
+        <p>
+            <input type="submit" value='Registrar'/>
+            <button (click)='this.pagina="principal"' >Cancelar</button>
+        </p>
+    </form>
+</div>
+<div *ngIf='this.pagina=="eliminar"'>
+    <h3>Confirmar</h3>
+    <p>¿Deseas eliminar el siguiente usuario ?</p>
+    <p>
+        <label> Nombre de usuario : {{this.usuario.name}}</label>
+    </p>
+    <p>
+        <label>Correo de usuario : {{this.usuario.email}}</label>
+    </p>
+    <p>
+        <label>Tipo de usuario : {{this.usuario.tipo}}</label>
+    </p>
+    <p>
+        <button (click)='Eliminar_usuario()'>Aceptar</button>
+        <button (click)='this.pagina="principal"'>Cancelar</button>
+    </p>
+</div>

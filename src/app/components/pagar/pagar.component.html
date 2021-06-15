@@ -1,0 +1,54 @@
+<div class='pagar' *ngIf='pago && opcion=="crear"'>
+	<h2>Registrar pago de {{cliente.name}}</h2>
+	<form #pagoForm='ngForm' (ngSubmit)='ingresar(pagoForm)'>
+		<p>
+			<label for='folio'>Folio del pago :</label>
+			<input type='text' name='folio' #folio='ngModel' [(ngModel)]='pago.folio' required/>
+			<span class='form_error' *ngIf='folio.touched && !folio.valid'>
+				Folio obligatorio
+			</span>
+		</p>
+		<p>
+			<label for='fecha_pago'>Fecha de realizacion :</label>
+			<input type='date' name='fecha_pago' #fecha_pago='ngModel' [(ngModel)]='pago.fecha_pago' required/>
+			<span class='form_error' *ngIf='fecha_pago.touched && !fecha_pago.valid'>
+				La fecha de pago es obligatoria
+			</span>
+		</p>
+		<p>
+			<label for='mes'>Mes pagado :</label>
+			<select name='mes'  #mes='ngModel' [(ngModel)]='pago.mes' required>
+				<option *ngFor='let mes of meses' value={{mes}}>{{mes}}</option>
+			</select>
+			<span class='form_error' *ngIf='mes.touched && !mes.valid'>
+				El mes es obligatorio
+			</span>
+		</p>
+		<p>
+			<label for='year'>Año del pago :</label>
+			<select type='number' name='year' #year='ngModel' [(ngModel)]='pago.year' required>
+				<option *ngFor='let year of years' value={{year}}>{{year}}</option>
+			</select>
+			<span class='form_error' *ngIf='year.touched && !year.valid'>
+				El año es obligatorio
+			</span>
+		</p>
+		<p>
+			<input class='boton' type="submit" value='Pagar' [disabled]='!pagoForm.form.valid'/>
+			<button class="boton" [routerLink]="['/proceso',this.id]" >Cancelar</button>
+		</p>
+	</form>
+</div>
+<div class='pagar' *ngIf='opcion=="confirmar"'>
+	<h2>Confirmar datos de pago</h2>
+	<h3>Cliente : </h3>
+	<p>{{cliente.name}}</p>
+	<h3>Folio del pago :</h3>
+	<p>{{pago.folio}}</p>
+	<h3>Pago del periodo :</h3>
+	<p>{{mes+' '+year+' a '+pago.mes+' '+pago.year}}</p>
+	<h3>Cantidad a pagar</h3>
+	<p>{{pago.cantidad}}</p>
+	<button (click)='realizar()' id='realizar'>Realizar pago</button>
+	<button (click)='cancelar()' id='cancelar'>Cancelar</button>
+</div>

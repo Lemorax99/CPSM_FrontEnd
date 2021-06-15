@@ -1,0 +1,18 @@
+.confirm{
+	position: absolute;
+	background: white;
+	width: 200px;
+	height: 200px;
+	margin-top: -400px;
+	margin-left: 350px;
+	border:1px solid black;
+	text-align: center;
+}
+.confirm h3{
+	margin-top: 10px;
+}
+.aumento{
+	margin-top: 20px;
+	margin-left: 5px;
+	background: #ccc;
+}

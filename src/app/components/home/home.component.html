@@ -1,0 +1,17 @@
+<div id='principal'>
+    <div class='botones'>
+        <input type='submit' id='clientes' value='' (click)='GoToUsers("/lista")'> 
+    </div>
+    <div id='mensajes'>
+
+    </div>
+    <div class='botones'>
+        <input type='submit' id='registrar' value='' (click)='GoToUsers("/registrar")'>
+    </div>
+    <div class='botones' >
+        <input type='submit' id='impuestos' value='' (click)='GoToUsers("/volver")'>
+    </div>
+    <div class='botones' >
+        <input type='submit' id='usuarios' value='' (click)='GoToUsers("/usuarios")' [disabled]='this.usuario.tipo!="Administrador"'>
+    </div>
+</div>

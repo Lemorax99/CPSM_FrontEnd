@@ -1,0 +1,76 @@
+.login{
+	background: #ccc;
+	border: 1px solid black;
+	box-shadow: black;
+	width: 350px;
+	height: 300px;
+	border-radius: 15px;
+	box-shadow: 0px 0px 5.0px black;
+	margin-top: 130px;
+	margin-left: 100px;
+}
+.caja {
+	display:block;
+	float: left;
+}
+.login h3{
+	text-align: center;
+	font-size: 30px;
+	color: #1A3F51;
+}
+.form p{
+	margin-left: 95px;
+	padding-top: 5px;
+	color: #18607F;
+	font-size: 25px;
+}
+.form p .titulo{
+	text-align: center !important;
+}
+.form p input{
+	height: 25px;
+}
+.form input[type='submit']{
+	font-size: 25px;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color:#9FA0A4;
+	margin-left: 20%;
+	margin-top: 30px;
+	width: 220px;
+	height: 50px;
+	background-color: #1A3F51;
+}
+#decoracion {
+	width:400px;
+	height: 487px;
+	margin-top:50px;
+	border: #1A3F51;
+	background-color: #FFFFFF;
+	font-size: 30px;
+	color: #1A3F51;
+	text-align: center;
+	display: block;
+	margin-left: 250px;
+	box-shadow: 0px 0px 5.0px black;
+}
+
+#decoracion p  img{
+	width: 400px;
+	height: 410px;
+}
+
+.caja2{
+	margin-top: 50px;
+	height: 450px;
+	width: 400px;
+}
+.caja2 p{
+	margin-left: 110px;
+}
+.caja2 p input[type='submit']{
+	height: 50px;
+	width: 320px;
+}
+#boton{
+	margin-left: -50px;
+}

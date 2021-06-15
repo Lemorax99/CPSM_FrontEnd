@@ -1,0 +1,65 @@
+<div class='containers'>
+	<h2>Modificar</h2>
+	<form #clienteForm='ngForm' (ngSubmit)='actualizar(clienteForm)' *ngIf='cliente'>
+		<p>
+			<label for='name'>Nombre :</label>
+			<input type="text" name='name' #name='ngModel' [(ngModel)]='cliente.name' required/>
+			<span class='form_error' *ngIf='name.touched && !name.valid'>
+				El nombre es obligatorio
+			</span>
+		</p>
+		<p>
+			<label for='rfc'>RFC :</label>
+			<input type='text' name='rfc' #rfc='ngModel' [(ngModel)]='cliente.rfc' required/>
+			<span class='form_error' *ngIf='rfc.touched && !rfc.valid'>
+				El rfc es obligatorio
+			</span>
+		</p>
+		<p>
+			<label for='curp'>CURP :</label>
+			<input type="text" name='curp' #curp='ngModel' [(ngModel)]='cliente.curp'/>
+		</p>
+		<p>
+			<label for='domicilo'>Domicilo :</label>
+			<input type="text" name='domicilio' #domicilio='ngModel' [(ngModel)]='cliente.domicilio'/>
+		</p>
+		<p>
+			<label for='telefono'>Telefono :</label>
+			<input type="number" name='telefono' #telefono='ngModel' [(ngModel)]='cliente.telefono'/>
+		</p>
+		<p>
+			<label for='password'>Contraseña :</label>
+			<input type="text" name='password' #password='ngModel' [(ngModel)]='cliente.password'/>
+		</p>
+		<p>
+			<label for='actividad'>Actividad :</label>
+			<input type='text' name='actividad' #actividad='ngModel' [(ngModel)]='cliente.actividad' required/>
+			<span class='form_error' *ngIf='actividad.touched && !actividad.valid'>
+				La actividad es obligatoria
+			</span>
+		</p>
+		<p>
+			<label for='fecha_inicio'>Fecha de inicio :</label>
+			<input type='date' name='fecha_inicio' #fecha_inicio='ngModel' [(ngModel)]='cliente.fecha_inicio'/>
+		</p>
+		<p>
+			<label for='correo'>Correo :</label>
+			<input type='text' name='correo' #correo='ngModel' [(ngModel)]='cliente.correo'/>
+		</p>
+		<p>
+			<label for='contra_correo'>Contraseña :</label>
+			<input type='text' name='contra_correo' #contra_correo='ngModel' [(ngModel)]='cliente.contra_correo'/>
+		</p>
+		<p>
+			<label for='regimen'>Regimen :</label>
+			<input type='text' name='regimen' #regimen='ngModel' [(ngModel)]='cliente.regimen' required/>
+			<span class='form_error' *ngIf='regimen.touched && !regimen.valid'>
+				La actividad es obligatoria
+			</span>
+		</p>
+		<p>
+			<input type="submit" value='Actualizar' [disabled]='!clienteForm.form.valid'/>
+			<button [routerLink]="['/proceso',this.id]">Cancelar</button>
+		</p>
+	</form>
+</div>

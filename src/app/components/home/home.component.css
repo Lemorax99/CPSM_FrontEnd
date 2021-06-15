@@ -1,0 +1,44 @@
+#principal{
+    width: 1100px;
+    height:500px;
+    margin-left:100px;
+}
+.botones{
+    background: #1A3F51 ;
+    margin-top: 50px;
+    margin-left: 100px;
+    display:block;
+    width:200px;
+    height: 200px;
+    border: 1px solid black;
+    float: left;
+}
+#mensajes{
+    margin-top: 50px;
+    margin-left: 150px;
+    display:block;
+    width:600px;
+    height: 200px;
+    border:1px solid black;
+    float: left;
+}
+#clientes{
+    background: url("../../../assets/img/clientesrender.png");
+    width: 100%;
+    height: 100%;
+}
+#registrar{
+    background: url("../../../assets/img/registrarrender.png");
+    width: 100%;
+    height: 100%;
+}
+#impuestos{
+    background: url("../../../assets/img/impuestosrender.png");
+    width: 100%;
+    height: 100%;
+}
+#usuarios{
+    background: url("../../../assets/img/usuariosrender.png");
+    width: 100%;
+    height: 100%;
+}

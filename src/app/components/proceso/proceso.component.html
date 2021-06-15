@@ -1,0 +1,106 @@
+<div *ngIf='cliente ' class='detalles' >
+	<div class='informacion'>
+		<h3>Nombre :</h3>
+		<p>{{cliente.name}}</p>
+		<h3>RFC :</h3>
+		<p>{{cliente.rfc}}</p>
+		<h3>CURP :</h3>
+		<p>{{cliente.curp}}</p>
+		<h3>Domicilio :</h3>
+		<p>{{cliente.domicilio}}</p>
+		<h3>Telefono :</h3>
+		<p>{{cliente.telefono}}</p>
+		<h3>Contraseña :</h3>
+		<p>{{cliente.password}}</p>
+		<h3>Actividad :</h3>
+		<p>{{cliente.actividad}}</p>
+		<h3>Fecha de inicio :</h3>
+		<p>{{cliente.fecha_inicio}}</p>
+		<h3>Correo :</h3>
+		<p>{{cliente.correo}}</p>
+		<h3>Contraseña del correo :</h3>
+		<p>{{cliente.contra_correo}}</p>
+		<h3>Regimen :</h3>
+		<p>{{cliente.regimen}}</p>
+	</div>
+	<div *ngIf='pago || this.existe' class='pago'>
+		<h2>Informacion del ultimo pago</h2>
+		<h3>Pagado hasta :</h3>
+		<p>{{ultimo_pago.mes}}  de  {{ultimo_pago.year}}</p>
+		<h3>Folio del ultimo pago: </h3>
+		<p>{{ultimo_pago.folio}}</p>
+		<h3>Cantidad pagada :</h3>
+		<p>{{ultimo_pago.cantidad}}</p>
+		<h3>Fecha de realizacion :</h3>
+		<p>{{ultimo_pago.fecha_pago}}</p>
+		<h3>Cuanto paga por mes</h3>
+		<p>{{ultimo_pago.pago_mes}}</p>
+	</div>
+	<div *ngIf='!this.existe' class='pago'>
+		<h2>No existe registro de pagos</h2>
+		<h2>Registrar primer pago</h2>
+		<form #honorarios_form='ngForm' (ngSubmit)='registrar_pago(honorarios_form)'>
+			<p>
+				<label for='folio_pago'>Digita folio de pago : </label>
+				<input type='text' name='folio_pago' #folio_pago='ngModel' [(ngModel)]='this.pago_usar.folio' required/>
+				<span class='form_error' *ngIf='folio_pago.touched && !folio_pago.valid'>
+					El folio del pago es obligatorio
+				</span>
+			</p>
+			<p>
+				<label for='fecha_pago'>Digita la fecha del pago : </label>
+				<input type='date' name=fecha_pago #fecha_pago='ngModel' [(ngModel)]='this.pago_usar.fecha_pago' required/>
+				<span class='form_error' *ngIf='fecha_pago.touched && !fecha_pago.valid'>
+					La fecha del pago es obligatoria
+				</span>
+			</p>
+			<p>
+				<label for='mes'>Selecciona hasta que mes se pago : </label>
+				<select type='text' name='mes' #mes='ngModel' [(ngModel)]='this.pago_usar.mes' required>
+					<option *ngFor='let mes of meses' value='{{mes}}'>{{mes}}</option>
+				</select>
+			</p>
+			<p>
+				<label for='year'>Selecciona hasta que año se pago : </label>
+				<select type='text' name='year' #year='ngModel' [(ngModel)]='this.pago_usar.year' required>
+					<option *ngFor='let year of years' value="{{year}}">{{year}}</option>	 
+				</select>
+				<span class='form_error' *ngIf='year.touched && !year.valid'>
+					Año de pago obligatorio
+				</span>
+			</p>
+			<p>
+				<label for='cantidad'>Digita la cantidad pagada : </label>
+				<input type='number' name='cantidad' #cantidad='ngModel' [(ngModel)]='this.pago_usar.cantidad' required/>
+				<span class='form_error' *ngIf='cantidad.touched && !cantidad.valid'>
+					La cantidad pagada es obligatoria
+				</span>
+			</p>
+			<p>
+				<label for='pago_mes'>Digita la cantidad que el cliente paga por mes : </label>
+				<input type='number' name='pago_mes' #pago_mes='ngModel' [(ngModel)]='this.pago_usar.pago_mes' required/>
+				<span class='form_error' *ngIf='pago_mes.touched && !pago_mes.valid'>
+					La cantidad del mes es obligatoria
+				</span>
+			</p>
+			<p>
+				<input type='submit' value='Pagar' [disabled]='!honorarios_form.form.valid'/>
+			</p>
+		</form>
+	</div>
+	<button id='proceso' class='actualizar' (click)='updateCliente(cliente._id)'>Actualizar</button>
+	<button id='proceso' class='eliminar' (click)='deleteCliente(cliente._id)' [disabled]='this.usuario.tipo!="Administrador"'>Eliminar</button>
+
+	<button *ngIf='this.existe' id='pagos' class='ver' [routerLink]="['/pagos',this.ultimo_pago.id_cliente]">Ver mas</button>
+	<button *ngIf='this.existe' id='pagos' class='hacer' [routerLink]="['/pagar',this.ultimo_pago.id_cliente]">Realizar pago</button>
+	<button *ngIf='this.existe' id='pagos' class='actualiza' (click)='aumentar(this.ultimo_pago.id_cliente)'>Aumentar honorarios</button>
+	<div *ngIf='estado' class='confirm'>
+		<h3>Cantidad anterior : </h3>
+		<p>{{this.ultimo_pago.pago_mes}}</p>
+		<label for='canti'>Digite nueva cantidad : </label>
+		<input type="number" name="canti" #cantidad='ngModel' [(ngModel)]=ultimo_pago.pago_mes>
+		<button class='aumento' (click)=aumentar2(ultimo_pago.pago_mes)>Aumentar</button>
+		<button class='aumento' (click)='volver()'>Cancelar</button>
+	</div>
+</div>
+

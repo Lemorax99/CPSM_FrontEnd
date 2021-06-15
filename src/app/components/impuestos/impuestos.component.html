@@ -1,0 +1,251 @@
+<div *ngIf='pagina=="lista"'>
+    <h2>Información sobre : {{cliente.name}}</h2>
+</div>
+<div>
+    <div class='tabla' *ngIf='pagina=="lista"'>
+        <table *ngIf='impuestos_totales'>
+            <tr class='headerstable' *ngIf='impuestos_totales.length!=0'>
+                <th width='200'>Folio de pago</th>
+                <th width='150'>Fecha de pago</th>
+                <th width='200'>Folio de presentación</th>
+                <th width='150'>Fecha de presentación</th>
+                <th width='300'>Impuestos de pago</th>
+                <th width='100'>Cantidad</th>
+                <th width='225'></th>
+            </tr>
+            <tr *ngIf='impuestos_totales.length==0'>
+                <th>No existe registro de impuestos</th>
+            </tr>
+            <tr *ngFor='let imp of impuestos_totales'>
+                <th width='200' *ngIf='imp.folio_pago != ""'>{{imp.folio_pago}}</th>
+                <th width='150' *ngIf='imp.fecha_pago != ""'>{{imp.fecha_pago}}</th>
+                <th width='200' *ngIf='imp.folio_pago == ""' class='form_error' ><button class='form_error' (click)="prueba(imp.id)">Registrar</button></th>
+                <th width='150' *ngIf='imp.folio_pago == ""' class='form_error'>Pendiente</th>
+                <th width='200' >{{imp.folio_presentacion}}</th>
+                <th width='150' >{{imp.fecha_presentacion}}</th>
+                <th width='300'>{{imp.impuestos}}</th>
+                <th width='100'>{{imp.cantidad}}</th>
+                <th>
+                    <button width='75' class="fas fa-edit"></button>
+                    <button width='75' class="fas fa-trash-alt" (click)='eliminar_impuesto(imp.id,imp,"pendiente")' [disabled]='this.usuarios.tipo!="Administrador"'></button>
+                </th>
+            </tr>
+        </table>
+    </div>
+    <div id='nueva_botones' *ngIf='pagina=="lista"'>
+        <button class='btn_individual' (click)='registrar()'>Añadir</button>
+    </div>
+    <div *ngIf='pagina=="registro"'>
+        <form #impuestoForm='ngForm' (ngSubmit)='formulario_registro(impuestoForm)'>
+            <p>
+                <label for='folio_pago' >Digita folio de pago : </label>
+                <input type='text' name='folio_pago'  #folio_pago='ngModel' [(ngModel)]='impuesto.folio_pago' > 
+                <span class='form_error' *ngIf='folio_pago.touched && !folio_pago.valid'>
+                    Folio del pago obligatorio
+                </span>
+            </p>
+            <p>
+                <label for='fecha_pago'>Digita fecha de pago : </label>
+                <input type='date' name='fecha_pago' #fecha_pago='ngModel' [(ngModel)]='impuesto.fecha_pago' />
+                <span class='form_error' *ngIf='fecha_pago.touched && !fecha_pago.valid'>
+                    La fecha de pago es obligatoria
+                </span>
+            </p>
+            <p>
+                <label for='folio_presentacion'>Digita folio de presentación : </label>
+                <input type='text' name='folio_presentacion' #folio_presentacion='ngModel' [(ngModel)]='impuesto.folio_presentacion' required>
+            </p>
+            <p>
+                <label for='fecha_presentacion'> Digita fecha de presentación : </label>
+                <input type='date' name='fecha_presentacion' #fecha_presentacion='ngModel' [(ngModel)]='impuesto.fecha_presentacion' required>
+            </p>
+            <p >
+                <label class='impuestos' for='iva' >Iva : </label>
+                <input type='checkbox' value='iva' (click)='estatus_impuestos("iva")'>
+                <input type='number' *ngIf='iva' name='iva'  #iva='ngModel' [(ngModel)]='monto_impuestos.iva' required>
+                <span class='form_error' *ngIf='iva.touched && !iva.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='isr'>Isr : </label>
+                <input type='checkbox' value='isr' (click)='estatus_impuestos("isr")'>
+                <input type='number' *ngIf='isr' name='isr' #isr='ngModel' [(ngModel)]='monto_impuestos.isr' required>
+                <span class='form_error' *ngIf='isr.touched && !isr.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='ieps'>Ieps : </label>
+                <input type='checkbox' value='ieps' (click)='estatus_impuestos("ieps")'>
+                <input type='number' *ngIf='ieps' name='ieps' #ieps='ngModel' [(ngModel)]='monto_impuestos.ieps' required>
+                <span class='form_error' *ngIf='ieps.touched && !ieps.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='ispt'>Ispt : </label>
+                <input type='checkbox' value='ispt' (click)='estatus_impuestos("ispt")'>
+                <input type='number' *ngIf='ispt' name='ispt' #ispt='ngModel' [(ngModel)]='monto_impuestos.ispt' required>
+                <span class='form_error' *ngIf='ispt.touched && !ispt.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='ish'>Ish : </label>
+                <input type='checkbox' value='ish' (click)='estatus_impuestos("ish")'>
+                <input type='number' *ngIf='ish' name='ish' #ish='ngModel' [(ngModel)]='monto_impuestos.ish' required>
+                <span class='form_error' *ngIf='ish.touched && !ish.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='isn'>Isn : </label>
+                <input type='checkbox' value='isn' (click)='estatus_impuestos("isn")'>
+                <input type='number' *ngIf='isn' name='isn' #isn='ngModel' [(ngModel)]='monto_impuestos.isn' required>
+                <span class='form_error' *ngIf='isn.touched && !isn.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='rtp'>Rtp : </label>
+                <input type='checkbox' value='rtp' (click)='estatus_impuestos("rtp")'>
+                <input type='number' *ngIf='rtp' name='rtp' #rtp='ngModel' [(ngModel)]='monto_impuestos.rtp' required>
+                <span class='form_error' *ngIf='rtp.touched && !rtp.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='imss'>Imss : </label>
+                <input type='checkbox' value='imss' (click)='estatus_impuestos("imss")'>
+                <input type='number' *ngIf='imss' name='imss' #imss='ngModel' [(ngModel)]='monto_impuestos.imss' required>
+                <span class='form_error' *ngIf='imss.touched && !imss.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='sar'>Sar : </label>
+                <input type='checkbox' value='sar' (click)='estatus_impuestos("sar")'>
+                <input type='number' *ngIf='sar' name='sar' #sar='ngModel' [(ngModel)]='monto_impuestos.sar' required>
+                <span class='form_error' *ngIf='sar.touched && !sar.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p>
+            <p>
+                <label class='impuestos' for='infonavit'>Infonavit : </label>
+                <input type='checkbox' value='infonavit' (click)='estatus_impuestos("infonavit")'>
+                <input type='number' *ngIf='infonavit' name='infonavit' #infonavit='ngModel' [(ngModel)]='monto_impuestos.infonavit' required>
+                <span class='form_error' *ngIf='infonavit.touched && !infonavit.valid'>
+                    Cantidad de impuesto obligatoria
+                </span>
+            </p> 
+            <p>
+                <button (click)='regresar_lista()' class='btn_individual'>Regresar</button>
+                <input type='submit' value='Registrar' [disabled]='!impuestoForm.form.valid' >
+            </p>
+        </form>
+    </div>
+    <div *ngIf='pagina=="confirmacion"'>
+        <h2>Confirmación</h2>
+        <h3>¿Confirma el registro de pago con los siguientes datos ?</h3>
+        <p>
+            <label>Fecha de pago : </label>
+            <label *ngIf='impuesto.fecha_pago == ""'>Pendiente</label>
+            <label *ngIf='impuesto.fecha_pago != ""'>{{impuesto.fecha_pago}}</label>
+        </p>
+        <p>
+            <label>Folio de pago : </label>
+            <label *ngIf='impuesto.folio_pago == ""'>Pendiente</label>
+            <label *ngIf='impuesto.folio_pago != ""'>{{impuesto.folio_pago}}</label>
+        </p>
+        <p>
+            <label>Fecha de presentación : </label>
+            <label>{{impuesto.fecha_presentacion}}</label>
+        </p>
+        <p>
+            <label>Folio de presentación : </label>
+            <label>{{impuesto.folio_presentacion}}</label>
+        </p>
+        <p>
+            <label>Impuestos del pago : </label>
+            <label>{{cadena_impuestos}}</label>
+        </p>
+        <p>
+            <label>Cantidad a pagar : </label>
+            <label>{{impuesto.cantidad}}</label>
+        </p>
+        <p>
+            <button (click)='agregar()'>Confirmar</button>
+            <button (click)='regresar_lista()' lcas='btn_individual'>Cancelar</button>
+        </p>
+    </div>
+    <div *ngIf='pagina=="pen"'>
+        <form #pendienteForm='ngForm' (ngSubmit)='registro_pendiente(pendienteForm)'>
+            <p>
+                <label for = 'folio_pago'>Digite el folio de pago :</label>
+                <input type='text' name='folio_pago' #folio_pago='ngModel' [(ngModel)]='impuesto.folio_pago' required> 
+                <span class ='form_error' *ngIf='folio_pago.touched && !folio_pago.valid'>
+                    Folio de pago obligatorio
+                </span>
+            </p>
+            <p>
+                <label for='fecha_pago'>Digite fecha de pago : </label>
+                <input type='date' name='fecha_pago' #fecha_pago='ngModel' [(ngModel)]='impuesto.fecha_pago' required>
+                <span class='form_error' *ngIf='fecha_pago.touched && !fecha_pago.valid'>
+                    Fecha de pago obligatoria 
+                </span>
+            </p>
+            <p>
+                <label>Folio de presentación : {{impuesto.folio_presentacion}}</label>
+            </p>
+            <p>
+                <label>Fecha de presentación : {{impuesto.fecha_presentacion}}</label>
+            </p>
+            <p>
+                <label>Cantidad del pago : {{impuesto.cantidad}}</label>
+            </p>
+            <p>
+                <input type='submit' value='Registrar' [disabled]='!pendienteForm.form.valid'>
+                <button (click)='pagina="lista"'>Cancelar</button>
+            </p>
+        </form>
+    </div>
+    <div *ngIf='pagina=="confirmar"'>
+        <h3>Confirmar datos de pago</h3>
+        <p>
+            <label>Fecha de pago : {{impuesto.fecha_pago}}</label>
+        </p>
+        <p>
+            <label>Folio de pago : {{impuesto.folio_pago}}</label>
+        </p>
+        <p>
+            <button (click)='confirmar_pendiente()'>Confirmar</button>
+            <button (click)='pagina="pendiente"'>Regresar</button>
+        </p>
+    </div>
+    <div *ngIf='pagina=="eliminar"'>
+        <h3>Seguro que deseas elimnar el siguiente pago </h3>
+        <p>
+            <label>Folio pago : {{impuesto.folio_pago}}</label>
+        </p>
+        <p>
+            <label>Fecha de pago : {{impuesto.fecha_pago}}</label>
+        </p>
+        <p>
+            <label>Folio de presentación : {{impuesto.folio_presentacion}}</label>
+        </p>
+        <p>
+            <label>Fecha de presentación : {{impuesto.fecha_prsentacion}}</label>
+        </p>
+        <p>
+            <label>Cantidad : {{impuesto.cantidad}}</label>
+        </p>
+        <p>
+            <button (click)="eliminar_impuesto(impuesto.id,impuesto,'eliminar')">Confirmar</button>
+            <button (click)="pagina='lista'">Cancelar</button>
+        </p>
+    </div>
+    <div *ngIf='pagina=="Modificar"'>
+
+    </div>
+</div>

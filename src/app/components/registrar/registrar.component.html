@@ -1,0 +1,150 @@
+<div class='containers'>
+
+	<div class='message success' *ngIf='status == "success"'>
+		El Proyecto se a creado correctamente, puedes <a [routerLink]='["/proyecto,save_project._id"]' >verlo aqui</a>
+	</div>
+
+	<div class='message failed' *ngIf='status == "failed"'>
+		El proyecto no se ha podido crear
+	</div>
+
+	<form #clienteForm='ngForm' (ngSubmit)='onSubmit(clienteForm)'>
+		<h2 *ngIf='this.pagina==1'>Datos del cliente</h2>
+		<p *ngIf='this.pagina==1'>
+			<label for='name'>Nombre :</label>
+			<input type="text" name='name' #name='ngModel' [(ngModel)]='cliente.name' [(ngModel)]='pago.id_cliente' required/>
+			<span class='form_error' *ngIf='name.touched && !name.valid'>
+				El nombre es obligatorio
+			</span>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='rfc'>RFC :</label>
+			<input type='text' name='rfc' #rfc='ngModel' [(ngModel)]='cliente.rfc'/>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='curp'>CURP :</label>
+			<input type="text" name='curp' #curp='ngModel' [(ngModel)]='cliente.curp' required/>
+			<span class='form_error' *ngIf='curp.touched && !curp.valid'>
+				Curp Obligatoria
+			</span>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='domicilo'>Domicilo :</label>
+			<input type="text" name='domicilio' #domicilio='ngModel' [(ngModel)]='cliente.domicilio'/>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='telefono'>Telefono :</label>
+			<input type="number" name='telefono' #telefono='ngModel' [(ngModel)]='cliente.telefono' required/>
+			<span class='form_error' *ngIf='telefono.touched && !telefono.valid'>
+				El telefono es obliatorio
+			</span>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='password'>Contraseña :</label>
+			<input type="text" name='password' #password='ngModel' [(ngModel)]='cliente.password'/>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='actividad'>Actividad :</label>
+			<input type='text' name='actividad' #actividad='ngModel' [(ngModel)]='cliente.actividad' />
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='fecha_inicio'>Fecha de inicio :</label>
+			<input type='date' name='fecha_inicio' #fecha_inicio='ngModel' [(ngModel)]='cliente.fecha_inicio' required/>
+			<span class='form_error' *ngIf='fecha_inicio.touched && !fecha_inicio.valid'>
+				Fecha de inicio obligatoria
+			</span>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='correo'>Correo :</label>
+			<input type='text' name='correo' #correo='ngModel' [(ngModel)]='cliente.correo'/>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='contra_correo'>Contraseña :</label>
+			<input type='text' name='contra_correo' #contra_correo='ngModel' [(ngModel)]='cliente.contra_correo'/>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='regimen'>Regimen :</label>
+			<select name='regimen' #regimen='ngModel' [(ngModel)]='cliente.regimen' required>
+				<option *ngFor='let reg of regimenes' value={{reg}} > {{reg}} </option>
+			</select>
+			<span class='form_error' *ngIf='regimen.touched && !regimen.valid'>
+				Selección de regimen obligatoria
+			</span>
+		</p>
+		<p *ngIf='this.pagina==1'>
+			<label for='estado'>Estado actual del cliente : </label>
+			<select name='estado' #estado='ngModel' [(ngModel)]='estado_option.estado' required>
+				<option *ngFor='let estado of estados' value={{estado}}>{{estado}}</option>
+			</select>
+			<span class='form_error' *ngIf='estado.touched && !estado.valid'>
+				El estado es obligatorio
+			</span>
+		</p>
+		<!-- formulario para el pago-->
+		<h2 *ngIf='this.pagina==2'>Registro de honorarios</h2>
+		<p *ngIf='this.pagina==2'>
+			<label for='honorarios'>Honorarios</label>
+			<input type='checkbox' id='checks' name ='honorarios' (click)="funcion('honorarios')"/>
+		</p>
+		<p *ngIf='this.pagina==2 && this.honorarios'>
+			<label for='folio'>Folio del ultimo pago :</label>
+			<input type='text' name='folio' #folio='ngModel' [(ngModel)]='pago.folio' />
+		</p>
+		<p *ngIf='this.pagina==2 && this.honorarios'>
+			<label for='fecha_pago'>Fecha en que se realizo :</label>
+			<input type='date' name='fecha_pago' #fecha_pago='ngModel' [(ngModel)]='pago.fecha_pago' />
+		</p>
+
+		<p *ngIf='this.pagina==2 && this.honorarios'>
+			<label for='mes'>Mes pagado :</label>
+			<select name='mes'  #mes='ngModel' [(ngModel)]='pago.mes' >
+				<option *ngFor='let mes of meses' value={{mes}}>{{mes}}</option>
+			</select>
+		</p>
+		<p *ngIf='this.pagina==2 && this.honorarios'>
+			<label for='year'>Año del pago :</label>
+			<select type='text' name='year' #year='ngModel' [(ngModel)]='pago.year' >
+				<option *ngFor='let year of years' value={{year}}>{{year}}</option>
+			</select>
+		</p>
+		<p *ngIf='this.pagina==2 && this.honorarios'>
+			<label for='cantidad'>Cobro por mes :</label>
+			<input type='text' name='cantidad' #cantidad='ngModel' [(ngModel)]='pago.cantidad' [(ngModel)]='pago.pago_mes'/>
+		</p>
+		<!-- ----------------------------------------------------------------------------------- -->
+		<!-- FORMULARIO FIEL Y CLAVE SD Y BUZON----------------------------------------------------------------------- -->
+		<p *ngIf='this.pagina==3'>
+			<label for='fiel_contra'>Registra contrsaeña de la fiel</label>
+			<input type='text' name='fiel_contra' #fiel_contra='ngModel' [(ngModel)]='FielyCsd.fiel_contra' />
+		</p>
+		<p *ngIf='this.pagina==3'>
+			<label for='fiel_vencimiento'>Registra fecha de vencimiento de la fiel</label>
+			<input type='date' name='fiel_vencimiento' #fiel_vencimiento='ngModel' [(ngModel)]='FielyCsd.fiel_vencimiento'/>
+		</p>
+		<p *ngIf='this.pagina==3'>
+			<label for='csd_contra'>Registra contraseña de la CSD</label>
+			<input type='text' name='csd_contra' #csd_contra='ngModel' [(ngModel)]='FielyCsd.csd_contra' />
+		</p>
+		<p *ngIf='this.pagina==3'>
+			<label for='csd_vencimiento'>Registra fecha de vencimiento de la CSD</label>
+			<input type='date' name='csd_vencimiento' #csd_vencimiento='ngModel' [(ngModel)]='FielyCsd.csd_vencimiento' />
+		</p>
+		<p *ngIf='this.pagina==3'>
+			<label for='buzon_folio'>Registra folio del buzon tributario</label>
+			<input type='text' name='buzon_folio' #buzon_folio='ngModel' [(ngModel)]='FielyCsd.buzon_folio' />
+		</p>
+		<p *ngIf='this.pagina==3'>
+			<label for='buzon_comunicacion'>Registra medio de comunicación del buzon tributario</label>
+			<input type='text' name='buzon_comunicacion' #buzon_comunicacion='ngModel' [(ngModel)]='FielyCsd.buzon_comunicacion' />
+		</p>
+		<p *ngIf='this.pagina==3'>
+			<label for='pendientes'>Registra pendientes del cliente</label>
+			<input type='text' name='pendientes' #pendientes=ngModel [(ngModel)]='FielyCsd.pendientes' />
+		</p>
+		<p>
+			<input *ngIf='this.pagina==3' type="submit" value='Enviar' [disabled]='!clienteForm.form.valid'/>
+		</p>
+	</form>
+	<button (click)="retroceder()" [disabled]='this.pagina==1'>Atras </button>
+	<button (click)='avanzar()' [disabled]='this.pagina==3 || !clienteForm.form.valid'>Siguiente</button>
+</div>

@@ -1,0 +1,28 @@
+<div class='container'>
+		<h2 style="text-align: center;">Impuestos</h2>
+		<div class='tabla'>
+			<table class='mostrar'>
+				<tr height='50' class='headerstable'>
+					<th width='50'>Ver</th>
+					<th width='350'>Nombre</th>
+					<th width='100'>Pagar</th>
+				</tr>
+			</table>
+			<table class='mostrar' cellspacing="1px" border="black">
+				<tr *ngFor ='let cliente of clientes' class='cliente headerstable' height='50' >
+					<td width="50">
+						<div class='botones'>
+							<button [routerLink]="['/proceso',cliente.name]">Ver</button>
+						</div>
+					</td>
+					<td width='350'>{{cliente.name}} </td>
+					<td>
+						<div class='botones'>
+							<button [routerLink]="['/impuestos',cliente._id]">Pagar</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+</div>
